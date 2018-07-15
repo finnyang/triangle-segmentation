@@ -1,0 +1,44 @@
+首先是需要安装pytorch
+pytorch cuda版本要求是cuda8.0及以上
+我使用的是conda安装，在这个之前我已经安装了anaconda这个软件
+为了让安装的过程更加快，需要修改一下软件源
+    # 优先使用清华conda镜像
+    conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+    # 也可选用科大conda镜像
+    conda config --add channels http://mirrors.ustc.edu.cn/anaconda/pkgs/free/
+再用conda install pytorch torchvision cuda80 -c soumith安装pytorch，到这里就安装好了pytorch
+我这里安装完pytorch是0.2版本，可以指定pytorch的版本pytorch=
+使用import torch进行测试。
+
+在我电脑上面运行gpu版本的pytorch出现了问题，最开始是cuda driver versions 和 cuda runtime versions 不一致，我就将cuda和显卡的版本升高。
+最后cuda为9.0，cudnn7.1
+后来又出现RuntimeError: CUDNN_STATUS_INTERNAL_ERROR问题，使用源码编译pytorch，运行前sudo rm -rf ~/.nv，就可以用gpu了。
+下一步是下载Pytorch-UNet工程
+git clone https://github.com/milesial/Pytorch-UNet.git
+下载完需要安装一下依赖库，我是出现得安装 pydensecrf的情况
+使用pip install  pydensecrf就可以了，网上说conda安装有好多问题，遇到了再说呗。
+predict.py的56行改了一下，不然没法运行，很奇怪好吧，有可能是版本的问题，现在pytorch的版本是0.2，尝试将pytorch的版本提到0.4，再来运行一下。
+predict.py 的51行，出现了transforms这个模块没有resize这个函数，妈的！我修改成Scale，可以使用了，就这样吧，后续看代码再自己找问题。
+
+
+
+代码阅读：
+
+5.4.2. Submodules
+When a submodule is loaded using any mechanism (e.g. importlib APIs, the import or import-from statements, or built-in __import__()) a binding is placed in the parent module’s namespace to the submodule object. For example, if package spam has a submodule foo, after importing spam.foo, spam will have an attribute foo which is bound to the submodule. Let’s say you have the following directory structure:
+spam/
+    __init__.py
+    foo.py
+    bar.py
+and spam/__init__.py has the following lines in it:
+
+from .foo import Foo
+from .bar import Bar
+then executing the following puts a name binding to foo and bar in the spam module:
+>>>
+>>> import spam
+>>> spam.foo
+<module 'spam.foo' from '/tmp/imports/spam/foo.py'>
+>>> spam.bar
+<module 'spam.bar' from '/tmp/imports/spam/bar.py'>
+Given Python’s familiar name binding rules this might seem surprising, but it’s actually a fundamental feature of the import system. The invariant holding is that if you have sys.modules['spam'] and sys.modules['spam.foo'] (as you would after the above import), the latter must appear as the foo attribute of the former.

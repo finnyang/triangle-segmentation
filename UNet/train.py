@@ -22,8 +22,8 @@ def train_net(net,
               gpu=False,
               img_scale=0.5):
 
-    dir_img = 'data/train/'
-    dir_mask = 'data/train_masks/'
+    dir_img = '/home/yang/triangle-segmentation/data/train'
+    dir_mask = '/home/yang/triangle-segmentation/data/masks'
     dir_checkpoint = 'checkpoints/'
 
     ids = get_ids(dir_img)

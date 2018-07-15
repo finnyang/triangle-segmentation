@@ -22,8 +22,8 @@ def train_net(net,
               gpu=False,
               img_scale=0.5):
 
-    dir_img = '/home/yang/triangle-segmentation/data/train'
-    dir_mask = '/home/yang/triangle-segmentation/data/masks'
+    dir_img = '/home/yang/triangle-segmentation/data/train/'
+    dir_mask = '/home/yang/triangle-segmentation/data/masks/'
     dir_checkpoint = 'checkpoints/'
 
     ids = get_ids(dir_img)
@@ -81,13 +81,14 @@ def train_net(net,
             loss = criterion(masks_probs_flat, true_masks_flat)
             epoch_loss += loss.item()
 
-            print('{0:.4f} --- loss: {1:.6f}'.format(i * batch_size / N_train, loss.item()))
+            #print('{0:.4f} --- loss: {1:.6f}'.format(i * batch_size / N_train, loss.item()))
+            print loss.item()
 
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
 
-        print('Epoch finished ! Loss: {}'.format(epoch_loss / i))
+        #print('Epoch finished ! Loss: {}'.format(epoch_loss / i))
 
         if 1:
             val_dice = eval_net(net, val, gpu)
@@ -121,7 +122,7 @@ def get_args():
 if __name__ == '__main__':
     args = get_args()
 
-    net = UNet(n_channels=3, n_classes=1)
+    net = UNet(n_channels=1, n_classes=1)
 
     if args.load:
         net.load_state_dict(torch.load(args.load))
@@ -130,7 +131,6 @@ if __name__ == '__main__':
     if args.gpu:
         net.cuda()
         # cudnn.benchmark = True # faster convolutions, but more memory
-
     try:
         train_net(net=net,
                   epochs=args.epochs,

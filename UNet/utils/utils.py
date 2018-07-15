@@ -14,6 +14,9 @@ def split_img_into_squares(img):
     return get_square(img, 0), get_square(img, 1)
 
 def hwc_to_chw(img):
+    shape=img.shape
+    if len(shape) == 2:
+        img=img.reshape((shape[0],shape[1],1))
     return np.transpose(img, axes=[2, 0, 1])
 
 def resize_and_crop(pilimg, scale=0.5, final_height=None):

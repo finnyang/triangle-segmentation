@@ -1,0 +1,10 @@
+/home/yang/triangle-segmentation/temp/0.tif 0.00482177734375
+/home/yang/triangle-segmentation/temp/1.tif 0.144165039062
+/home/yang/triangle-segmentation/temp/2.tif 0.335754394531
+/home/yang/triangle-segmentation/temp/3.tif 0.0596923828125
+/home/yang/triangle-segmentation/temp/4.tif 0.0280151367188
+/home/yang/triangle-segmentation/temp/5.tif 0.0323486328125
+/home/yang/triangle-segmentation/temp/6.tif 0.0806274414062
+/home/yang/triangle-segmentation/temp/7.tif 0.0216674804688
+/home/yang/triangle-segmentation/temp/8.tif 0.0172729492188
+/home/yang/triangle-segmentation/temp/9.tif 0.00823974609375
